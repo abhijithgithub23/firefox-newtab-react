@@ -11,6 +11,8 @@ const shortcuts = [
   { name: 'MCP Vaspian', icon: 'M' },
   { name: 'AI Assistant', icon: 'A' },
   { name: 'Spectrotel', icon: 'S' },
+  { name: 'AI Assistant', icon: 'A' },
+  { name: 'Spectrotel', icon: 'S' },
 ];
 
 function App() {

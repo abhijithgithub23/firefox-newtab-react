@@ -10,7 +10,7 @@ export function useNews() {
       try {
         const res = await fetch('https://saurav.tech/NewsAPI/top-headlines/category/technology/in.json');
         const data = await res.json();
-        setArticles(data.articles.slice(0, 14)); 
+        setArticles(data.articles.slice(0, 12)); 
       } catch (error) {
         console.error("Failed to fetch news", error);
       } finally {
