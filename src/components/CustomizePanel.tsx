@@ -1,4 +1,10 @@
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger
+} from "./ui/sheet";
 import { Switch } from "./ui/switch";
 import { Button } from "./ui/button";
 import { Settings, Plus } from "lucide-react";
@@ -10,13 +16,17 @@ interface Props {
   setBgSettings: (settings: BackgroundSettings) => void;
   showShortcuts: boolean;
   setShowShortcuts: (val: boolean) => void;
+  showNews: boolean;
+  setShowNews: (val: boolean) => void;
 }
 
 export default function CustomizePanel({
   bgSettings,
   setBgSettings,
   showShortcuts,
-  setShowShortcuts
+  setShowShortcuts,
+  showNews,
+  setShowNews
 }: Props) {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -119,7 +129,11 @@ export default function CustomizePanel({
                   Exceptional content
                 </p>
               </div>
-              <Switch defaultChecked />
+
+              <Switch
+                checked={showNews}
+                onCheckedChange={setShowNews}
+              />
             </div>
           </div>
         </div>

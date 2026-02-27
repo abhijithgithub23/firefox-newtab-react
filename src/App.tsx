@@ -12,6 +12,7 @@ function App() {
   });
 
   const [showShortcuts, setShowShortcuts] = useState(true);
+  const [showNews, setShowNews] = useState(true);
 
   const appStyle =
     bgSettings.type === 'image'
@@ -36,7 +37,7 @@ function App() {
 
           {showShortcuts && <Shortcuts />}
 
-          <NewsFeed />
+          {showNews && <NewsFeed />}
         </div>
       </div>
 
@@ -45,6 +46,8 @@ function App() {
         setBgSettings={setBgSettings}
         showShortcuts={showShortcuts}
         setShowShortcuts={setShowShortcuts}
+        showNews={showNews}
+        setShowNews={setShowNews}
       />
     </div>
   );
