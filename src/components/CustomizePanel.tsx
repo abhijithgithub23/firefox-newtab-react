@@ -30,12 +30,22 @@ export default function CustomizePanel({
 }: Props) {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  // 🔥 DEFINE YOUR DEFAULT BACKGROUND HERE
+  const defaultBackground: BackgroundSettings = {
+    type: "color",
+    value: "bg-[#1C1B22]"
+  };
+
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       const imageUrl = URL.createObjectURL(file);
       setBgSettings({ type: "image", value: imageUrl });
     }
+  };
+
+  const handleResetDefault = () => {
+    setBgSettings(defaultBackground);
   };
 
   return (
@@ -51,17 +61,24 @@ export default function CustomizePanel({
       </SheetTrigger>
 
       <SheetContent className="bg-[#1C1B22] border-l-gray-800 text-white w-[350px]">
-        <SheetHeader>
-          <SheetTitle className="text-white text-xl text-left">
+        <SheetHeader className="flex flex-row items-center justify-between  mt-6">
+          <SheetTitle className="text-white text-xl">
             Wallpapers
           </SheetTitle>
+
+          <button
+            onClick={handleResetDefault}
+            className="text-xs text-blue-400 hover:text-blue-300"
+          >
+            Reset Default
+          </button>
         </SheetHeader>
 
         <div className="mt-6 space-y-6">
           <div className="grid grid-cols-3 gap-3">
             <div className="flex flex-col items-center gap-2">
               <button
-                className="w-full h-16 rounded-md bg-[#4A154B] border-2 border-transparent hover:border-blue-500 focus:border-blue-500"
+                className="w-full h-16 rounded-md bg-[#4A154B] border-2 border-transparent hover:border-blue-500"
                 onClick={() =>
                   setBgSettings({ type: "color", value: "bg-[#4A154B]" })
                 }
