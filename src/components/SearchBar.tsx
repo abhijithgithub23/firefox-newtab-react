@@ -63,14 +63,27 @@ export default function SearchBar({ isCollapsed }: SearchBarProps) {
           />
         </div>
 
-        <Input
-          type="text"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          onKeyDown={handleKeyDown}
-          placeholder="Search with Google"
-          className="w-full pl-14 pr-14 py-7 bg-[#2B2A33] border-none rounded-xl text-white placeholder:text-gray-400 focus-visible:ring-1 focus-visible:ring-blue-500 shadow-2xl text-xl"
-        />
+        <input
+        type="text"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        onKeyDown={handleKeyDown}
+        placeholder="Search with Google"
+        className="
+          w-full
+          pl-12 pr-12
+          py-3 sm:py-4 md:py-5
+          bg-[#2B2A33]
+          border-none
+          rounded-xl
+          text-sm sm:text-base md:text-lg
+          text-white
+          placeholder:text-gray-400
+          focus-visible:ring-1 focus-visible:ring-blue-500
+          shadow-2xl
+          transition-all
+        "
+      />
 
         {query.trim().length > 0 && (
           <button
