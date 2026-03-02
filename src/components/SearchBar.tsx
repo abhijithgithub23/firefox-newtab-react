@@ -46,7 +46,7 @@ export default function SearchBar({ isCollapsed }: SearchBarProps) {
             alt="Firefox"
             className="w-14 h-14 mr-4"
           />
-          <h1 className="text-white font-bold tracking-tight text-3xl hidden md:block">
+          <h1 className="hidden md:block text-white font-bold tracking-tight text-3xl">
             Firefox
           </h1>
         </div>
