@@ -1,7 +1,7 @@
 export interface Article {
   title: string;
   url: string;
-  urlToImage: string;
+  urlToImage: string | null;
   source: { name: string };
   publishedAt: string;
 }

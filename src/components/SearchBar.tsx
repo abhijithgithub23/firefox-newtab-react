@@ -13,7 +13,7 @@ export default function SearchBar({ isCollapsed }: SearchBarProps) {
           : "flex flex-col items-center mt-12 mb-10"
       }`}
     >
-      {/* 1. Logo Section (Absolutely positioned to the left when collapsed) */}
+      {/* 1. Logo Section to left */}
       <div 
         className={`flex items-center ${
           isCollapsed ? "absolute left-0" : "justify-center mb-10"
@@ -31,11 +31,11 @@ export default function SearchBar({ isCollapsed }: SearchBarProps) {
         </div>
       </div>
 
-      {/* 2. Search Input Section (Perfectly Centered) */}
+      {/* 2. Logo section middle */}
       <div 
         className={`relative w-full ${
           isCollapsed 
-            ? "max-w-[650px]" // 🔥 Trimmed down to 650px to reduce width while staying dead center
+            ? "max-w-[650px]" 
             : "max-w-2xl"
         }`}
       >

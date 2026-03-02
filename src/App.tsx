@@ -21,8 +21,6 @@ function App() {
       ? {
           backgroundImage: `url(${bgSettings.value})`,
           backgroundSize: '100vw 100vh', 
-          // 🔥 CHANGED: Anchored to 'top left' instead of 'center'. 
-          // This stops the image from recalculating its center when the scrollbar disappears!
           backgroundPosition: 'top left', 
           backgroundAttachment: 'fixed',
           backgroundRepeat: 'no-repeat',
