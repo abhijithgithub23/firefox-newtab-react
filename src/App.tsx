@@ -14,6 +14,9 @@ function App() {
   const [showShortcuts, setShowShortcuts] = useState(true);
   const [showNews, setShowNews] = useState(true);
 
+  // Layout shifts if BOTH are ON
+  const isCollapsed = showShortcuts && showNews;
+
   const appStyle =
     bgSettings.type === 'image'
       ? {
@@ -32,12 +35,16 @@ function App() {
       style={appStyle}
     >
       <div className="min-h-screen bg-black/20 backdrop-blur-sm">
-        <div className="container mx-auto px-4 py-8">
-          <SearchBar />
+        {/* We use px-12 to keep the logo slightly away from the absolute edge */}
+        <div className="w-full px-8 md:px-12 py-8 transition-all duration-700">
+          
+          <SearchBar isCollapsed={isCollapsed} />
 
-          {showShortcuts && <Shortcuts />}
-
-          {showNews && <NewsFeed />}
+          {/* This wrapper keeps the grid content centered while the header is wide */}
+          <div className="max-w-6xl mx-auto transition-all duration-700">
+            {showShortcuts && <Shortcuts />}
+            {showNews && <NewsFeed />}
+          </div>
         </div>
       </div>
 
