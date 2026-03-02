@@ -1,89 +1,79 @@
-import { useState } from 'react';
-import { Input } from './ui/input';
-import { Search } from 'lucide-react';
+import { useState } from "react";
+import { Input } from "./ui/input";
+import { Search } from "lucide-react";
 
 interface SearchBarProps {
   isCollapsed: boolean;
 }
 
 export default function SearchBar({ isCollapsed }: SearchBarProps) {
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
 
-  // Function to execute the search
   const handleSearch = () => {
     if (query.trim()) {
-      const searchUrl = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
-      window.open(searchUrl, '_blank', 'noopener,noreferrer');
-      // Optional: Clear the input after searching
-      setQuery(''); 
+      const searchUrl = `https://www.google.com/search?q=${encodeURIComponent(
+        query
+      )}`;
+      window.open(searchUrl, "_blank", "noopener,noreferrer");
+      setQuery("");
     }
   };
 
-  // Listen for the Enter key
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      e.preventDefault(); // Prevents default form submission behavior just in case
+    if (e.key === "Enter") {
+      e.preventDefault();
       handleSearch();
     }
   };
 
   return (
-    <div 
+    <div
       className={`w-full relative ${
-        isCollapsed 
-          ? "flex items-center justify-center mb-16 mt-2 min-h-[60px]" 
+        isCollapsed
+          ? "flex items-center justify-center mb-16 mt-2 min-h-[60px]"
           : "flex flex-col items-center mt-12 mb-10"
       }`}
     >
-      {/* 1. Logo Section to left */}
-      <div 
+      {/* Logo Section */}
+      <div
         className={`flex items-center ${
           isCollapsed ? "absolute left-0" : "justify-center mb-10"
         }`}
       >
         <div className="flex items-center shrink-0">
-          <img 
-            src="https://upload.wikimedia.org/wikipedia/commons/a/a0/Firefox_logo%2C_2019.svg" 
-            alt="Firefox" 
-            className="w-14 h-14 mr-4" 
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/a/a0/Firefox_logo%2C_2019.svg"
+            alt="Firefox"
+            className="w-14 h-14 mr-4"
           />
-          <h1 className="text-white font-bold tracking-tight text-3xl">
+          <h1 className="text-white font-bold tracking-tight text-3xl hidden md:block">
             Firefox
           </h1>
         </div>
       </div>
 
-      {/* 2. Search Input Section */}
-      <div 
-        className={`relative w-full ${
-          isCollapsed 
-            ? "max-w-[650px]" 
-            : "max-w-2xl"
-        }`}
-      >
-        {/* Left Google Icon */}
+      {/* Search Input Section */}
+      <div className="relative w-[clamp(280px,35vw,650px)] mx-auto">
+        
         <div className="absolute inset-y-0 left-5 flex items-center pointer-events-none">
-          <img 
-            src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" 
-            alt="G" 
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg"
+            alt="G"
             className="w-6 h-6"
           />
         </div>
-        
-        {/* Input Field */}
-        <Input 
-          type="text" 
+
+        <Input
+          type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder="Search with Google" 
-          //  CHANGED: pr-4 to pr-14 to make room for the search icon on the right
+          placeholder="Search with Google"
           className="w-full pl-14 pr-14 py-7 bg-[#2B2A33] border-none rounded-xl text-white placeholder:text-gray-400 focus-visible:ring-1 focus-visible:ring-blue-500 shadow-2xl text-xl"
         />
 
-        {/* Right Search Icon Button - Only visible when there is text */}
         {query.trim().length > 0 && (
-          <button 
+          <button
             onClick={handleSearch}
             className="absolute inset-y-0 right-4 flex items-center justify-center text-gray-400 hover:text-white transition-colors"
             aria-label="Search"
