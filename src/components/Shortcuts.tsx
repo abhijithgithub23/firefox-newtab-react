@@ -1,3 +1,4 @@
+// import { MoreHorizontal } from 'lucide-react';
 
 const Shortcuts = () => {
   const shortcuts = [
@@ -11,13 +12,21 @@ const Shortcuts = () => {
   ];
 
   return (
-    // 🔥 CHANGED: Increased gap from gap-6 to gap-10
-    <div className="flex justify-center gap-10 mb-12">
+    // Reduced the gap slightly because the padding on the items naturally creates space
+    <div className="flex justify-center flex-wrap gap-3 mb-12">
       {shortcuts.map((sc, i) => (
-        <div key={i} className="flex flex-col items-center gap-2 group cursor-pointer w-20">
-          
-          {/* 🔥 CHANGED: Replaced group-hover:bg-[#383841] with group-hover:bg-gray-400 */}
-          <div className="w-14 h-14 bg-[#2B2A33] rounded-xl flex items-center justify-center text-white text-xl font-bold group-hover:bg-gray-400 transition-colors shadow-md">
+        <div 
+          key={i} 
+          // 🔥 CHANGED: Hover background, padding, and rounded corners applied to the ENTIRE wrapper
+          className="relative flex flex-col items-center group cursor-pointer w-[96px] p-3 rounded-xl hover:bg-[#383841] transition-colors"
+        >
+          {/* 🔥 ADDED: The 3-dot context menu that only appears on wrapper hover
+          <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity p-0.5 rounded hover:bg-white/20 text-gray-300 hover:text-white z-10">
+            <MoreHorizontal className="w-4 h-4" />
+          </div> */}
+
+          {/* Inner Icon Box - Removed the hover effect from here so it stays solid */}
+          <div className="w-14 h-14 bg-[#2B2A33] rounded-xl flex items-center justify-center text-white text-xl font-bold shadow-md mb-3">
             {sc.icon}
           </div>
           

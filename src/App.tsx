@@ -14,16 +14,18 @@ function App() {
   const [showShortcuts, setShowShortcuts] = useState(true);
   const [showNews, setShowNews] = useState(true);
 
-  // Layout shifts if BOTH are ON
   const isCollapsed = showShortcuts && showNews;
 
+  // 🔥 CHANGED: Adjusted backgroundSize to exactly fit the screen dimensions 
+  // and added backgroundRepeat to prevent tiling.
   const appStyle =
     bgSettings.type === 'image'
       ? {
           backgroundImage: `url(${bgSettings.value})`,
-          backgroundSize: 'cover',
+          backgroundSize: '100vw 100vh', // Fits exactly left-to-right, top-to-bottom
           backgroundPosition: 'center',
-          backgroundAttachment: 'fixed'
+          backgroundAttachment: 'fixed',
+          backgroundRepeat: 'no-repeat'
         }
       : {};
 
@@ -34,13 +36,13 @@ function App() {
       }`}
       style={appStyle}
     >
-      <div className="min-h-screen bg-black/20 backdrop-blur-sm">
-        {/* We use px-12 to keep the logo slightly away from the absolute edge */}
+      {/* 🔥 CHANGED: Removed "backdrop-blur-sm" so the image is crystal clear. 
+          Left bg-black/20 to slightly darken the image so text remains readable. */}
+      <div className="min-h-screen bg-black/20">
         <div className="w-full px-8 md:px-12 py-8 transition-all duration-700">
           
           <SearchBar isCollapsed={isCollapsed} />
 
-          {/* This wrapper keeps the grid content centered while the header is wide */}
           <div className="max-w-6xl mx-auto transition-all duration-700">
             {showShortcuts && <Shortcuts />}
             {showNews && <NewsFeed />}
