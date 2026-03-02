@@ -16,16 +16,16 @@ function App() {
 
   const isCollapsed = showShortcuts && showNews;
 
-  // 🔥 CHANGED: Adjusted backgroundSize to exactly fit the screen dimensions 
-  // and added backgroundRepeat to prevent tiling.
   const appStyle =
     bgSettings.type === 'image'
       ? {
           backgroundImage: `url(${bgSettings.value})`,
-          backgroundSize: '100vw 100vh', // Fits exactly left-to-right, top-to-bottom
-          backgroundPosition: 'center',
+          backgroundSize: '100vw 100vh', 
+          // 🔥 CHANGED: Anchored to 'top left' instead of 'center'. 
+          // This stops the image from recalculating its center when the scrollbar disappears!
+          backgroundPosition: 'top left', 
           backgroundAttachment: 'fixed',
-          backgroundRepeat: 'no-repeat'
+          backgroundRepeat: 'no-repeat',
         }
       : {};
 
@@ -36,8 +36,6 @@ function App() {
       }`}
       style={appStyle}
     >
-      {/* 🔥 CHANGED: Removed "backdrop-blur-sm" so the image is crystal clear. 
-          Left bg-black/20 to slightly darken the image so text remains readable. */}
       <div className="min-h-screen bg-black/20">
         <div className="w-full px-8 md:px-12 py-8 transition-all duration-700">
           
