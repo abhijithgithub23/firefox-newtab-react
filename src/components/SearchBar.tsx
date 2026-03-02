@@ -1,10 +1,32 @@
+import { useState } from 'react';
 import { Input } from './ui/input';
+import { Search } from 'lucide-react';
 
 interface SearchBarProps {
   isCollapsed: boolean;
 }
 
 export default function SearchBar({ isCollapsed }: SearchBarProps) {
+  const [query, setQuery] = useState('');
+
+  // Function to execute the search
+  const handleSearch = () => {
+    if (query.trim()) {
+      const searchUrl = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+      window.open(searchUrl, '_blank', 'noopener,noreferrer');
+      // Optional: Clear the input after searching
+      setQuery(''); 
+    }
+  };
+
+  // Listen for the Enter key
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault(); // Prevents default form submission behavior just in case
+      handleSearch();
+    }
+  };
+
   return (
     <div 
       className={`w-full relative ${
@@ -31,7 +53,7 @@ export default function SearchBar({ isCollapsed }: SearchBarProps) {
         </div>
       </div>
 
-      {/* 2. Logo section middle */}
+      {/* 2. Search Input Section */}
       <div 
         className={`relative w-full ${
           isCollapsed 
@@ -39,6 +61,7 @@ export default function SearchBar({ isCollapsed }: SearchBarProps) {
             : "max-w-2xl"
         }`}
       >
+        {/* Left Google Icon */}
         <div className="absolute inset-y-0 left-5 flex items-center pointer-events-none">
           <img 
             src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" 
@@ -46,11 +69,28 @@ export default function SearchBar({ isCollapsed }: SearchBarProps) {
             className="w-6 h-6"
           />
         </div>
+        
+        {/* Input Field */}
         <Input 
           type="text" 
-          placeholder="Search with Google or enter address" 
-          className="w-full pl-14 pr-4 py-7 bg-[#2B2A33] border-none rounded-xl text-white placeholder:text-gray-400 focus-visible:ring-1 focus-visible:ring-blue-500 shadow-2xl text-xl"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          onKeyDown={handleKeyDown}
+          placeholder="Search with Google" 
+          //  CHANGED: pr-4 to pr-14 to make room for the search icon on the right
+          className="w-full pl-14 pr-14 py-7 bg-[#2B2A33] border-none rounded-xl text-white placeholder:text-gray-400 focus-visible:ring-1 focus-visible:ring-blue-500 shadow-2xl text-xl"
         />
+
+        {/* Right Search Icon Button - Only visible when there is text */}
+        {query.trim().length > 0 && (
+          <button 
+            onClick={handleSearch}
+            className="absolute inset-y-0 right-4 flex items-center justify-center text-gray-400 hover:text-white transition-colors"
+            aria-label="Search"
+          >
+            <Search className="w-6 h-6" />
+          </button>
+        )}
       </div>
     </div>
   );
