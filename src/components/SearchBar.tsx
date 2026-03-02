@@ -7,43 +7,35 @@ interface SearchBarProps {
 export default function SearchBar({ isCollapsed }: SearchBarProps) {
   return (
     <div 
-      className={`w-full transition-all duration-700 ease-in-out ${
+      className={`w-full relative ${
         isCollapsed 
-          ? "grid grid-cols-[1.2fr_2fr_1fr] items-center mb-16 mt-2 gap-4" 
+          ? "flex items-center justify-center mb-16 mt-2 min-h-[60px]" 
           : "flex flex-col items-center mt-12 mb-10"
       }`}
     >
-      {/* 1. Logo Section (INCREASED SIZE) */}
+      {/* 1. Logo Section (Absolutely positioned to the left when collapsed) */}
       <div 
-        className={`flex items-center transition-all duration-700 ${
-          isCollapsed ? "justify-start" : "justify-center mb-10"
+        className={`flex items-center ${
+          isCollapsed ? "absolute left-0" : "justify-center mb-10"
         }`}
       >
         <div className="flex items-center shrink-0">
           <img 
             src="https://upload.wikimedia.org/wikipedia/commons/a/a0/Firefox_logo%2C_2019.svg" 
             alt="Firefox" 
-            // 🔥 INCREASED: w-16 h-16 (was w-10)
-            className={`transition-all duration-700 ${
-              isCollapsed ? "w-14 h-14 mr-4" : "w-14 h-14 mr-4"
-            }`} 
+            className="w-14 h-14 mr-4" 
           />
-          <h1 
-            // 🔥 INCREASED: text-5xl for center, text-3xl for corner
-            className={`text-white font-bold tracking-tight transition-all duration-700 ${
-              isCollapsed ? "text-3xl" : "text-3xl"
-            }`}
-          >
+          <h1 className="text-white font-bold tracking-tight text-3xl">
             Firefox
           </h1>
         </div>
       </div>
 
-      {/* 2. Search Input Section */}
+      {/* 2. Search Input Section (Perfectly Centered) */}
       <div 
-        className={`relative transition-all duration-700 ease-in-out mx-auto w-full ${
+        className={`relative w-full ${
           isCollapsed 
-            ? "max-w-3xl" 
+            ? "max-w-[650px]" // 🔥 Trimmed down to 650px to reduce width while staying dead center
             : "max-w-2xl"
         }`}
       >
@@ -60,9 +52,6 @@ export default function SearchBar({ isCollapsed }: SearchBarProps) {
           className="w-full pl-14 pr-4 py-7 bg-[#2B2A33] border-none rounded-xl text-white placeholder:text-gray-400 focus-visible:ring-1 focus-visible:ring-blue-500 shadow-2xl text-xl"
         />
       </div>
-
-      {/* 3. Empty Spacer */}
-      <div className={isCollapsed ? "block" : "hidden"} />
     </div>
   );
 }
