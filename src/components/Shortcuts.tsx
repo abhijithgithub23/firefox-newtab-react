@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { MoreHorizontal, Plus, Edit2, Trash2, X } from 'lucide-react';
+import { v4 as uuidv4 } from 'uuid';
+
 
 // Define the shape of our Shortcut object
 interface Shortcut {
@@ -75,7 +77,7 @@ const Shortcuts = () => {
     } else {
       // Add new
       const newShortcut: Shortcut = {
-        id: Date.now().toString(),
+        id: uuidv4(),
         name: formData.name,
         url: finalUrl,
         icon: iconUrl,
