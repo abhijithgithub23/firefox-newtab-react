@@ -48,7 +48,7 @@ export default function SearchBar({ isCollapsed }: SearchBarProps) {
           />
           <h1 
             className={`text-white font-bold tracking-tight text-3xl ${
-              isCollapsed ? "hidden" : "block"
+              isCollapsed ? "max-[730px]:hidden" : ""
             }`}
           >
             Firefox
