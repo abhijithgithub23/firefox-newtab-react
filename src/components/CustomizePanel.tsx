@@ -21,7 +21,7 @@ interface Props {
 }
 
 export default function CustomizePanel({
-  bgSettings,
+  // bgSettings,
   setBgSettings,
   showShortcuts,
   setShowShortcuts,
@@ -83,26 +83,37 @@ export default function CustomizePanel({
                   setBgSettings({ type: "color", value: "bg-[#4A154B]" })
                 }
               />
-              <span className="text-xs text-gray-400">Solid color</span>
+              <span className="text-xs text-gray-400">Purple</span>
             </div>
 
             <div className="flex flex-col items-center gap-2">
               <button
+                className="w-full h-16 rounded-md bg-[#15244b] border-2 border-transparent hover:border-blue-500"
+                onClick={() =>
+                  setBgSettings({ type: "color", value: "bg-[#15244b]" })
+                }
+              />
+              <span className="text-xs text-gray-400">Blue</span>
+            </div>
+
+
+            {/* <div className="flex flex-col items-center gap-2">
+              <button
                 className="w-full h-16 rounded-md bg-cover bg-center border-2 border-transparent hover:border-blue-500"
                 style={{
                   backgroundImage:
-                    "url(https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=300&auto=format&fit=crop)"
+                    "https://unsplash.com/photos/starry-night-sky-over-snow-covered-mountains-ktllNfb9cBs"
                 }}
                 onClick={() =>
                   setBgSettings({
                     type: "image",
                     value:
-                      "https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=1920&auto=format&fit=crop"
+                      "https://unsplash.com/photos/starry-night-sky-over-snow-covered-mountains-ktllNfb9cBs"
                   })
                 }
               />
               <span className="text-xs text-gray-400">Photographs</span>
-            </div>
+            </div> */}
 
             <div className="flex flex-col items-center gap-2">
               <button

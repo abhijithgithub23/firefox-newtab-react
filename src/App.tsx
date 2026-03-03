@@ -1,18 +1,43 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import SearchBar from './components/SearchBar';
 import NewsFeed from './components/NewsFeed';
 import CustomizePanel from './components/CustomizePanel';
 import Shortcuts from './components/Shortcuts';
 import type { BackgroundSettings } from './types';
 
-function App() {
-  const [bgSettings, setBgSettings] = useState<BackgroundSettings>({
-    type: 'color',
-    value: 'bg-[#1C1B22]'
+function App() { 
+  const [bgSettings, setBgSettings] = useState<BackgroundSettings>(() => {
+    const saved = localStorage.getItem('firefox-bg-settings');
+    return saved ? JSON.parse(saved) : { type: 'color', value: 'bg-[#1C1B22]' };
   });
 
-  const [showShortcuts, setShowShortcuts] = useState(true);
-  const [showNews, setShowNews] = useState(true);
+  const [showShortcuts, setShowShortcuts] = useState<boolean>(() => {
+    const saved = localStorage.getItem('firefox-show-shortcuts');
+    return saved !== null ? JSON.parse(saved) : true;
+  });
+
+  const [showNews, setShowNews] = useState<boolean>(() => {
+    const saved = localStorage.getItem('firefox-show-news');
+    return saved !== null ? JSON.parse(saved) : true;
+  });
+
+
+  
+  useEffect(() => {
+    localStorage.setItem('firefox-bg-settings', JSON.stringify(bgSettings));
+  }, [bgSettings]);
+
+  useEffect(() => {
+    localStorage.setItem('firefox-show-shortcuts', JSON.stringify(showShortcuts));
+  }, [showShortcuts]);
+
+  useEffect(() => {
+    localStorage.setItem('firefox-show-news', JSON.stringify(showNews));
+  }, [showNews]);
+
+
+
+
 
   const isCollapsed = showShortcuts && showNews;
 
