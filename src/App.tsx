@@ -44,8 +44,8 @@ function App() {
     bgSettings.type === 'image'
       ? {
           backgroundImage: `url(${bgSettings.value})`,
-          backgroundSize: '100vw 100vh', 
-          backgroundPosition: 'top left', 
+          backgroundSize: 'cover', 
+          backgroundPosition: 'center', 
           backgroundAttachment: 'fixed',
           backgroundRepeat: 'no-repeat',
         }

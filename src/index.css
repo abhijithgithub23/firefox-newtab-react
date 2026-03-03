@@ -2,14 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
-/* html {
+html {
   scrollbar-gutter: stable !important;
-} */
+}
 
-/* body {
-  overflow-y: scroll !important;
-  padding-right: 0 !important;
-} */
+body {
+  /* This stops Radix/Shadcn from forcefully injecting padding when the panel opens */
+  padding-right: 0 !important; 
+  /* If it's still jumping slightly, try adding margin-right: 0 !important; as well */
+}
+
+
 
 @layer base {
   :root {

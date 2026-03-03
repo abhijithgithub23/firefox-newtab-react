@@ -49,7 +49,7 @@ export default function CustomizePanel({
   };
 
   return (
-    <Sheet>
+    <Sheet modal={false}>
       <SheetTrigger asChild>
         <Button
           variant="secondary"
