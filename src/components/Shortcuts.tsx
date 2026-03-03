@@ -12,18 +12,14 @@ interface Shortcut {
 }
 
 const Shortcuts = () => {
-  // 1. State for shortcuts, loaded from Local Storage if available
+  // Local Storage if available
   const [shortcuts, setShortcuts] = useState<Shortcut[]>(() => {
     const saved = localStorage.getItem('firefox-shortcuts');
     if (saved) return JSON.parse(saved);
-    return [
-      { id: '1', name: 'Google', url: 'https://google.com', icon: 'https://www.google.com/s2/favicons?domain=google.com&sz=128' },
-      { id: '2', name: 'GitHub', url: 'https://github.com', icon: 'https://www.google.com/s2/favicons?domain=github.com&sz=128' },
-      { id: '3', name: 'Wikipedia', url: 'https://wikipedia.org', icon: 'https://www.google.com/s2/favicons?domain=wikipedia.org&sz=128' },
-    ];
+    return [];
   });
-
-  // 2. UI State
+ 
+  // State
   const [activeMenuId, setActiveMenuId] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -31,10 +27,10 @@ const Shortcuts = () => {
 
   const menuRef = useRef<HTMLDivElement>(null);
 
-  // Save to Local Storage whenever shortcuts change
   useEffect(() => {
     localStorage.setItem('firefox-shortcuts', JSON.stringify(shortcuts));
   }, [shortcuts]);
+
 
   // Close the 3-dot menu if clicked outside
   useEffect(() => {
@@ -47,15 +43,15 @@ const Shortcuts = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // Helper function to format the URL and get the Google Favicon
+  
+  //  function Google Favicon
   const getFaviconUrl = (url: string) => {
     try {
-      // Ensure the URL has a protocol
       const fullUrl = url.startsWith('http') ? url : `https://${url}`;
       const domain = new URL(fullUrl).hostname;
       return `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
     } catch {
-      return ''; // Fallback if URL is invalid
+      return ''; 
     }
   };
 
@@ -70,12 +66,10 @@ const Shortcuts = () => {
     const iconUrl = getFaviconUrl(finalUrl);
 
     if (editingId) {
-      // Edit existing
       setShortcuts(shortcuts.map(sc => 
         sc.id === editingId ? { ...sc, name: formData.name, url: finalUrl, icon: iconUrl } : sc
       ));
     } else {
-      // Add new
       const newShortcut: Shortcut = {
         id: uuidv4(),
         name: formData.name,
@@ -117,7 +111,7 @@ const Shortcuts = () => {
   };
 
   const handleMenuToggle = (id: string, e: React.MouseEvent) => {
-    e.preventDefault(); // Prevent navigating to the link
+    e.preventDefault(); 
     e.stopPropagation();
     setActiveMenuId(activeMenuId === id ? null : id);
   };
@@ -146,7 +140,7 @@ const Shortcuts = () => {
             <div 
               ref={menuRef}
               className="absolute top-8 right-2 w-32 bg-[#2B2A33] border border-gray-700 rounded-lg shadow-xl z-20 py-1"
-              onClick={(e) => e.preventDefault()} // Keep click inside dropdown from opening the link
+              onClick={(e) => e.preventDefault()} 
             >
               <button 
                 onClick={(e) => openEditModal(sc, e)}
@@ -178,7 +172,7 @@ const Shortcuts = () => {
         </a>
       ))}
 
-      {/* 2. ADD SHORTCUT BUTTON */}
+      {/* 2. ADD SHORTCUT BUTTON */} 
       <div 
         onClick={openAddModal}
         className="relative flex flex-col items-center group cursor-pointer w-[96px] p-3 rounded-xl hover:bg-[#383841] transition-colors"

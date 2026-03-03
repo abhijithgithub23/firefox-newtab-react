@@ -22,4 +22,4 @@ export function useNews() {
   }, []);
 
   return { articles, loading };
-}
+} 

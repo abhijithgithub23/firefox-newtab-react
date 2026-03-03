@@ -3,7 +3,7 @@ import {
   SheetContent,
   SheetHeader,
   SheetTitle,
-  SheetTrigger
+  SheetTrigger 
 } from "./ui/sheet";
 import { Switch } from "./ui/switch";
 import { Button } from "./ui/button";
@@ -55,8 +55,8 @@ export default function CustomizePanel({
           variant="secondary"
           className="fixed bottom-6 right-6 rounded-full bg-[#2B2A33] text-white hover:bg-[#383841] border-none shadow-lg px-4 py-2"
         >
-          <Settings className="w-4 h-4 mr-2" />
-          Customize
+          <Settings className="w-4 h-4 max-[1499px]:mr-0 mr-2" />
+          <span className="max-[1499px]:hidden">Customize</span>
         </Button>
       </SheetTrigger>
 

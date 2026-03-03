@@ -6,6 +6,8 @@ import Shortcuts from './components/Shortcuts';
 import type { BackgroundSettings } from './types';
 
 function App() { 
+
+
   const [bgSettings, setBgSettings] = useState<BackgroundSettings>(() => {
     const saved = localStorage.getItem('firefox-bg-settings');
     return saved ? JSON.parse(saved) : { type: 'color', value: 'bg-[#1C1B22]' };
@@ -22,7 +24,6 @@ function App() {
   });
 
 
-  
   useEffect(() => {
     localStorage.setItem('firefox-bg-settings', JSON.stringify(bgSettings));
   }, [bgSettings]);
@@ -34,8 +35,6 @@ function App() {
   useEffect(() => {
     localStorage.setItem('firefox-show-news', JSON.stringify(showNews));
   }, [showNews]);
-
-
 
 
 
@@ -54,7 +53,7 @@ function App() {
 
   return (
     <div
-      className={`min-h-screen w-full transition-all duration-500 overflow-y-auto ${
+      className={`min-h-screen w-full   ${
         bgSettings.type === 'color' ? bgSettings.value : ''
       }`}
       style={appStyle}

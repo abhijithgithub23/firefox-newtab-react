@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Search } from "lucide-react";
 
 interface SearchBarProps {
-  isCollapsed: boolean;
+  isCollapsed: boolean; 
 }
 
 export default function SearchBar({ isCollapsed }: SearchBarProps) {
@@ -46,14 +46,27 @@ export default function SearchBar({ isCollapsed }: SearchBarProps) {
             alt="Firefox"
             className="w-14 h-14 mr-4"
           />
-          <h1 className="hidden md:block text-white font-bold tracking-tight text-3xl">
+          <h1 
+            className={`text-white font-bold tracking-tight text-3xl ${
+              isCollapsed ? "hidden" : "block"
+            }`}
+          >
             Firefox
           </h1>
         </div>
       </div>
 
       {/* Search Input Section */}
-      <div className="relative w-[clamp(280px,35vw,650px)] mx-auto">
+      <div 
+        className={`relative mx-auto 
+          w-[clamp(280px,35vw,650px)] 
+          max-[419px]:w-[200px]
+          ${
+          isCollapsed 
+            ? "max-[499px]:ml-auto max-[499px]:mr-0" 
+            : "max-[499px]:self-end"
+        }`}
+      >
         
         <div className="absolute inset-y-0 left-5 flex items-center pointer-events-none">
           <img
@@ -64,26 +77,26 @@ export default function SearchBar({ isCollapsed }: SearchBarProps) {
         </div>
 
         <input
-        type="text"
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        onKeyDown={handleKeyDown}
-        placeholder="Search with Google"
-        className="
-          w-full
-          pl-12 pr-12
-          py-3 sm:py-4 md:py-5
-          bg-[#2B2A33]
-          border-none
-          rounded-xl
-          text-sm sm:text-base md:text-lg
-          text-white
-          placeholder:text-gray-400
-          focus-visible:ring-1 focus-visible:ring-blue-500
-          shadow-2xl
-          transition-all
-        "
-      />
+          type="text"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          onKeyDown={handleKeyDown}
+          placeholder="Search with Google"
+          className="
+            w-full
+            pl-12 pr-12
+            py-3 sm:py-4 md:py-5
+            bg-[#2B2A33]
+            border-none
+            rounded-xl
+            text-sm sm:text-base md:text-lg
+            text-white
+            placeholder:text-gray-400
+            focus-visible:ring-1 focus-visible:ring-blue-500
+            shadow-2xl
+            transition-all
+          "
+        />
 
         {query.trim().length > 0 && (
           <button

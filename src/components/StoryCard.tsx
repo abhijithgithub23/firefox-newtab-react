@@ -22,5 +22,5 @@ export default function StoryCard({ article }: { article: Article }) {
         </CardContent>
       </Card>
     </a>
-  );
+  ); 
 }
