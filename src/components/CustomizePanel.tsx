@@ -21,7 +21,7 @@ interface Props {
 }
 
 export default function CustomizePanel({
-  // bgSettings,
+  bgSettings, // Now active
   setBgSettings,
   showShortcuts,
   setShowShortcuts,
@@ -30,34 +30,30 @@ export default function CustomizePanel({
 }: Props) {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // DEFAULT BACKGROUND HERE
   const defaultBackground: BackgroundSettings = {
     type: "color",
     value: "bg-[#1C1B22]"
   };
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-  const file = e.target.files?.[0];
-  if (!file) return;
+    const file = e.target.files?.[0];
+    if (!file) return;
 
-  if (file.size > 4 * 1024 * 1024) {
-    alert("Image too large. Keep it under 4MB.");
-    return;
-  }
+    if (file.size > 4 * 1024 * 1024) {
+      alert("Image too large. Keep it under 4MB.");
+      return;
+    }
 
-  const reader = new FileReader();
-
-  reader.onloadend = () => {
-    const base64String = reader.result as string;
-
-    setBgSettings({
-      type: "image",
-      value: base64String,
-    });
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const base64String = reader.result as string;
+      setBgSettings({
+        type: "image",
+        value: base64String,
+      });
+    };
+    reader.readAsDataURL(file);
   };
-
-  reader.readAsDataURL(file);
-};
 
   const handleResetDefault = () => {
     setBgSettings(defaultBackground);
@@ -76,7 +72,7 @@ export default function CustomizePanel({
       </SheetTrigger>
 
       <SheetContent className="bg-[#1C1B22] border-l-gray-800 text-white w-[350px]">
-        <SheetHeader className="flex flex-row items-center justify-between  mt-6">
+        <SheetHeader className="flex flex-row items-center justify-between mt-6">
           <SheetTitle className="text-white text-xl">
             Wallpapers
           </SheetTitle>
@@ -91,9 +87,13 @@ export default function CustomizePanel({
 
         <div className="mt-6 space-y-6">
           <div className="grid grid-cols-3 gap-3">
+            
+            {/* Color: Purple */}
             <div className="flex flex-col items-center gap-2">
               <button
-                className="w-full h-16 rounded-md bg-[#4A154B] border-2 border-transparent hover:border-blue-500"
+                className={`w-full h-16 rounded-md bg-[#4A154B] border-2 hover:border-blue-500 transition-all ${
+                  bgSettings.value === "bg-[#4A154B]" ? "border-blue-500" : "border-transparent"
+                }`}
                 onClick={() =>
                   setBgSettings({ type: "color", value: "bg-[#4A154B]" })
                 }
@@ -101,9 +101,12 @@ export default function CustomizePanel({
               <span className="text-xs text-gray-400">Purple</span>
             </div>
 
+            {/* Color: Blue */}
             <div className="flex flex-col items-center gap-2">
               <button
-                className="w-full h-16 rounded-md bg-[#15244b] border-2 border-transparent hover:border-blue-500"
+                className={`w-full h-16 rounded-md bg-[#15244b] border-2 hover:border-blue-500 transition-all ${
+                  bgSettings.value === "bg-[#15244b]" ? "border-blue-500" : "border-transparent"
+                }`}
                 onClick={() =>
                   setBgSettings({ type: "color", value: "bg-[#15244b]" })
                 }
@@ -111,25 +114,19 @@ export default function CustomizePanel({
               <span className="text-xs text-gray-400">Blue</span>
             </div>
 
+            {/* Custom Image Preview - Shows only if an image is uploaded */}
+            {bgSettings.type === "image" && (
+              <div className="flex flex-col items-center gap-2">
+                <button
+                  className="w-full h-16 rounded-md border-2 border-blue-500 bg-cover bg-center"
+                  style={{ backgroundImage: `url(${bgSettings.value})` }}
+                  onClick={() => {}} // Already active
+                />
+                <span className="text-xs text-gray-400">Custom</span>
+              </div>
+            )}
 
-            {/* <div className="flex flex-col items-center gap-2">
-              <button
-                className="w-full h-16 rounded-md bg-cover bg-center border-2 border-transparent hover:border-blue-500"
-                style={{
-                  backgroundImage:
-                    "https://unsplash.com/photos/starry-night-sky-over-snow-covered-mountains-ktllNfb9cBs"
-                }}
-                onClick={() =>
-                  setBgSettings({
-                    type: "image",
-                    value:
-                      "https://unsplash.com/photos/starry-night-sky-over-snow-covered-mountains-ktllNfb9cBs"
-                  })
-                }
-              />
-              <span className="text-xs text-gray-400">Photographs</span>
-            </div> */}
-
+            {/* Upload Button */}
             <div className="flex flex-col items-center gap-2">
               <button
                 onClick={() => fileInputRef.current?.click()}
