@@ -1,73 +1,79 @@
-# React + TypeScript + Vite
+# Firefox New Tab
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A customizable new firefox tab  built with **React**, **Vite**, and **TypeScript**. Enhance your browsing experience with quick shortcuts, live news updates, and a fully configurable background.
 
-Currently, two official plugins are available:
+## Table of Contents
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [Demo](#demo)
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Installation](#installation)
+- [Folder Structure](#folder-structure)
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Demo
 
-## Expanding the ESLint configuration
+Live demo link: 
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Features
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- **Add, Edit, Delete Shortcuts**: Quickly manage your favorite websites.
+- **News Feed**: Fetches and displays live news from a public News API.
+- **Customizable Background**: Upload your own image or select a color theme.
+- **Sliding Customize Panel**: Built with [shadcn UI], allows easy toggling of:
+  - Background settings
+  - Show/Hide shortcuts
+  - Show/Hide news
+- **Responsive Design**: Works on various screen sizes seamlessly.
+- **Lightweight & Fast**: Minimal load time for smooth user experience.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Tech Stack
+
+- **Frontend:** React, Vite, TypeScript, Tailwind CSS / plain CSS
+- **UI Components:** shadcn UI, Lucide React Icons
+- **API:** News API for live news updates
+- **Tools & Utilities:** Git, VS Code
+
+
+## Installation
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/your-username/firefox-new-tab.git
+cd firefox-new-tab
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+3. Run the development server:
+   ```bash
+   npm run dev
+   ```
+4. Open http://localhost:5173
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+
+## Folder Structure
+
+project-root/
+│
+├─ public/           # Static files
+├─ src/
+│   ├─ components/   # Reusable components
+│   ├─ hooks/        # News Api
+│   ├─ lib/          # Shadcn utility
+│   ├─ App.tsx       # Main app component
+│   └─ main.tsx      # Entry point
+├─ package.json
+└─ README.md
+
+
+
+
+
