@@ -72,7 +72,7 @@ export default function SearchBar({ isCollapsed }: SearchBarProps) {
           <img
             src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg"
             alt="G"
-            className="w-6 h-6"
+            className="w-6 h-6" 
           />
         </div>
 
@@ -81,7 +81,7 @@ export default function SearchBar({ isCollapsed }: SearchBarProps) {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder="Search with Google"
+          placeholder="   Search with Google"
           className="
             w-full
             pl-12 pr-12
