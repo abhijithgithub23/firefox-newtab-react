@@ -88,6 +88,7 @@ export default function SearchBar({ isCollapsed }: SearchBarProps) {
             py-3 sm:py-4 md:py-5
             bg-[#2B2A33]
             border-none
+            outline-none
             rounded-xl
             text-sm sm:text-base md:text-lg
             text-white
