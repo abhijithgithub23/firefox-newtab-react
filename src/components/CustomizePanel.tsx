@@ -160,7 +160,7 @@ export default function CustomizePanel({
               />
             </div>
 
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between">   
               <div className="space-y-0.5">
                 <label className="text-sm font-medium">
                   Recommended stories
