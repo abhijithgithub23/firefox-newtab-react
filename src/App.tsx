@@ -6,8 +6,6 @@ import Shortcuts from './components/Shortcuts';
 import type { BackgroundSettings } from './types';
 
 function App() { 
-
-
   const [bgSettings, setBgSettings] = useState<BackgroundSettings>(() => {
     const saved = localStorage.getItem('firefox-bg-settings');
     return saved ? JSON.parse(saved) : { type: 'color', value: 'bg-[#1C1B22]' };
@@ -23,6 +21,8 @@ function App() {
     return saved !== null ? JSON.parse(saved) : true;
   });
 
+  // NEW: Lifted search state
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     localStorage.setItem('firefox-bg-settings', JSON.stringify(bgSettings));
@@ -35,8 +35,6 @@ function App() {
   useEffect(() => {
     localStorage.setItem('firefox-show-news', JSON.stringify(showNews));
   }, [showNews]);
-
-
 
   const isCollapsed = showShortcuts && showNews;
 
@@ -53,7 +51,7 @@ function App() {
 
   return (
     <div
-      className={`min-h-screen w-full   ${
+      className={`min-h-screen w-full ${
         bgSettings.type === 'color' ? bgSettings.value : ''
       }`}
       style={appStyle}
@@ -61,11 +59,17 @@ function App() {
       <div className="min-h-screen bg-black/20">
         <div className="w-full px-8 md:px-12 py-8 transition-all duration-700">
           
-          <SearchBar isCollapsed={isCollapsed} />
+          {/* Pass searchQuery and setter to SearchBar */}
+          <SearchBar 
+            isCollapsed={isCollapsed} 
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery} 
+          />
 
           <div className="max-w-6xl mx-auto transition-all duration-700">
             {showShortcuts && <Shortcuts />}
-            {showNews && <NewsFeed />}
+            {/* Pass searchQuery to NewsFeed for filtering */}
+            {showNews && <NewsFeed searchQuery={searchQuery} />}
           </div>
         </div>
       </div>

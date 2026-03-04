@@ -1,31 +1,13 @@
-import { useState } from "react";
-// import { Input } from "./ui/input";
-import { Search } from "lucide-react";
+import { Search, X } from "lucide-react";
 
 interface SearchBarProps {
   isCollapsed: boolean; 
+  searchQuery: string;
+  setSearchQuery: (query: string) => void;
 }
 
-export default function SearchBar({ isCollapsed }: SearchBarProps) {
-  const [query, setQuery] = useState("");
-
-  const handleSearch = () => {
-    if (query.trim()) {
-      const searchUrl = `https://www.google.com/search?q=${encodeURIComponent(
-        query
-      )}`;
-      window.open(searchUrl, "_blank", "noopener,noreferrer");
-      setQuery("");
-    }
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      handleSearch();
-    }
-  };
-
+export default function SearchBar({ isCollapsed, searchQuery, setSearchQuery }: SearchBarProps) {
+  
   return (
     <div
       className={`w-full relative ${
@@ -68,23 +50,18 @@ export default function SearchBar({ isCollapsed }: SearchBarProps) {
         }`}
       >
         
-        <div className="absolute inset-y-0 left-5 flex items-center pointer-events-none">
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg"
-            alt="G"
-            className="w-6 h-6" 
-          />
+        <div className="absolute inset-y-0 left-5 flex items-center pointer-events-none text-gray-400">
+          <Search className="w-5 h-5" />
         </div>
 
         <input
           type="text"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          onKeyDown={handleKeyDown}
-          placeholder="Search with Google"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder="Filter news articles..."
           className="
             w-full
-            pl-16 pr-12
+            pl-14 pr-12
             py-3 sm:py-4 md:py-5
             bg-[#2B2A33]
             border-none
@@ -99,13 +76,13 @@ export default function SearchBar({ isCollapsed }: SearchBarProps) {
           "
         />
 
-        {query.trim().length > 0 && (
+        {searchQuery.trim().length > 0 && (
           <button
-            onClick={handleSearch}
+            onClick={() => setSearchQuery("")}
             className="absolute inset-y-0 right-4 flex items-center justify-center text-gray-400 hover:text-white transition-colors"
-            aria-label="Search"
+            aria-label="Clear Search"
           >
-            <Search className="w-6 h-6" />
+             <X className="w-5 h-5" />
           </button>
         )}
       </div>
