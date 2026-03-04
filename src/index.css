@@ -10,10 +10,16 @@ body {
   padding-right: 0 !important; 
 } */
 
+html {
+  overflow-y: scroll; /* Always show vertical scrollbar */
+  scrollbar-gutter: stable; /* Reserve space for scrollbar when hidden */
+}
+
 html, body {
   background-color: #1C1B22; /* Matches your Firefox dark background */
   color-scheme: dark; /* Magic one-liner that makes the scrollbar dark! */
 }
+
 
 
 
