@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
-import { MoreHorizontal, Plus, Edit2, Trash2, X } from 'lucide-react';
+import { MoreHorizontal, Plus, Edit2, Trash2, X, AlertTriangle } from 'lucide-react';
 import { v4 as uuidv4 } from 'uuid';
-
 
 // Define the shape of our Shortcut object
 interface Shortcut {
@@ -22,6 +21,7 @@ const Shortcuts = () => {
   // State
   const [activeMenuId, setActiveMenuId] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [deleteConfirmationId, setDeleteConfirmationId] = useState<string | null>(null);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [formData, setFormData] = useState({ name: '', url: '' });
 
@@ -30,7 +30,6 @@ const Shortcuts = () => {
   useEffect(() => {
     localStorage.setItem('firefox-shortcuts', JSON.stringify(shortcuts));
   }, [shortcuts]);
-
 
   // Close the 3-dot menu if clicked outside
   useEffect(() => {
@@ -43,8 +42,6 @@ const Shortcuts = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  
-  //  function Google Favicon
   const getFaviconUrl = (url: string) => {
     try {
       const fullUrl = url.startsWith('http') ? url : `https://${url}`;
@@ -57,33 +54,23 @@ const Shortcuts = () => {
 
   const ensureProtocol = (url: string) => url.startsWith('http') ? url : `https://${url}`;
 
-
-
-  
-  
-  // handles input name and url
   const handleSave = (e: React.FormEvent) => {
     e.preventDefault();
-
     const trimmedName = formData.name.trim();
     const trimmedUrl = formData.url.trim();
 
-    // Name validation: only alphanumeric
-    const nameRegex = /^[a-zA-Z0-9]+$/;
+    const nameRegex = /^[a-zA-Z0-9\s]+$/; // Allowed spaces in name for better UX
     if (!trimmedName || !nameRegex.test(trimmedName)) {
-      alert("Name must contain only alphanumeric characters and no spaces.");
+      alert("Name must contain only alphanumeric characters.");
       return;
     }
 
-    // URL validation: must contain at least one dot
     if (!trimmedUrl || !trimmedUrl.includes(".")) {
-      alert("Please enter a valid URL with at least one dot (e.g., example.com).");
+      alert("Please enter a valid URL.");
       return;
     }
 
-    // Ensure protocol
     const finalUrl = ensureProtocol(trimmedUrl);
-
     const iconUrl = getFaviconUrl(finalUrl);
 
     if (editingId) {
@@ -101,19 +88,23 @@ const Shortcuts = () => {
       };
       setShortcuts([...shortcuts, newShortcut]);
     }
-
     closeModal();
   };
 
-
-
-
-
-  const handleDelete = (id: string, e: React.MouseEvent) => {
+  // 1. Open confirmation modal
+  const confirmDelete = (id: string, e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    setShortcuts(shortcuts.filter(sc => sc.id !== id));
+    setDeleteConfirmationId(id);
     setActiveMenuId(null);
+  };
+
+  // 2. Actually delete the shortcut
+  const executeDelete = () => {
+    if (deleteConfirmationId) {
+      setShortcuts(shortcuts.filter(sc => sc.id !== deleteConfirmationId));
+      setDeleteConfirmationId(null);
+    }
   };
 
   const openAddModal = () => {
@@ -145,7 +136,6 @@ const Shortcuts = () => {
 
   return (
     <div className="flex justify-center flex-wrap gap-3 mb-12">
-      {/* 1. Map Over Existing Shortcuts */}
       {shortcuts.map((sc) => (
         <a 
           key={sc.id} 
@@ -154,7 +144,6 @@ const Shortcuts = () => {
           rel="noopener noreferrer"
           className="relative flex flex-col items-center group cursor-pointer w-[96px] p-3 rounded-xl hover:bg-[#383841] transition-colors"
         >
-          {/* 3-Dot Context Menu Button */}
           <button 
             onClick={(e) => handleMenuToggle(sc.id, e)}
             className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity p-0.5 rounded hover:bg-white/20 text-gray-300 hover:text-white z-10"
@@ -162,7 +151,6 @@ const Shortcuts = () => {
             <MoreHorizontal className="w-4 h-4" />
           </button>
 
-          {/* Dropdown Menu (Edit/Delete) */}
           {activeMenuId === sc.id && (
             <div 
               ref={menuRef}
@@ -176,7 +164,7 @@ const Shortcuts = () => {
                 <Edit2 className="w-3 h-3 mr-2" /> Edit
               </button>
               <button 
-                onClick={(e) => handleDelete(sc.id, e)}
+                onClick={(e) => confirmDelete(sc.id, e)}
                 className="w-full text-left px-3 py-2 text-sm text-red-400 hover:bg-[#383841] flex items-center"
               >
                 <Trash2 className="w-3 h-3 mr-2" /> Delete
@@ -184,7 +172,6 @@ const Shortcuts = () => {
             </div>
           )}
 
-          {/* Inner Icon Box */}
           <div className="w-14 h-14 bg-[#2B2A33] rounded-xl flex items-center justify-center text-white text-xl font-bold shadow-md mb-3 overflow-hidden">
             {sc.icon ? (
               <img src={sc.icon} alt={sc.name} className="w-8 h-8 object-contain" />
@@ -199,7 +186,6 @@ const Shortcuts = () => {
         </a>
       ))}
 
-      {/* 2. ADD SHORTCUT BUTTON */} 
       <div 
         onClick={openAddModal}
         className="relative flex flex-col items-center group cursor-pointer w-[96px] p-3 rounded-xl hover:bg-[#383841] transition-colors"
@@ -212,12 +198,10 @@ const Shortcuts = () => {
         </span>
       </div>
 
-      {/* 3. ADD/EDIT MODAL OVERLAY */}
+      {/* ADD/EDIT MODAL */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4">
           <div className="bg-[#1C1B22] border border-gray-800 rounded-xl shadow-2xl w-full max-w-md p-6 relative">
-            
-            {/* Modal Header */}
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-white text-xl font-semibold">
                 {editingId ? 'Edit shortcut' : 'Add shortcut'}
@@ -227,7 +211,6 @@ const Shortcuts = () => {
               </button>
             </div>
 
-            {/* Form Input */}
             <form onSubmit={handleSave} className="space-y-4">
               <div>
                 <label className="block text-xs font-medium text-gray-400 mb-1">Name</label>
@@ -241,7 +224,6 @@ const Shortcuts = () => {
                   required
                 />
               </div>
-
               <div>
                 <label className="block text-xs font-medium text-gray-400 mb-1">URL</label>
                 <input 
@@ -253,25 +235,46 @@ const Shortcuts = () => {
                   required
                 />
               </div>
-
-              {/* Action Buttons */}
               <div className="flex justify-end gap-3 mt-8">
-                <button 
-                  type="button" 
-                  onClick={closeModal}
-                  className="px-4 py-2 rounded-md text-sm font-medium text-gray-300 hover:bg-[#2B2A33] transition-colors"
-                >
+                <button type="button" onClick={closeModal} className="px-4 py-2 rounded-md text-sm font-medium text-gray-300 hover:bg-[#2B2A33]">
                   Cancel
                 </button>
-                <button 
-                  type="submit"
-                  className="px-4 py-2 rounded-md text-sm font-medium bg-blue-600 text-white hover:bg-blue-700 transition-colors disabled:opacity-50"
-                  disabled={!formData.name || !formData.url}
-                >
+                <button type="submit" className="px-4 py-2 rounded-md text-sm font-medium bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50" disabled={!formData.name || !formData.url}>
                   Save
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* DELETE CONFIRMATION MODAL */}
+      {deleteConfirmationId && (
+        <div className="fixed inset-0 bg-black/60 z-[60] flex items-center justify-center p-4">
+          <div className="bg-[#1C1B22] border border-gray-800 rounded-xl shadow-2xl w-full max-w-sm p-6">
+            <div className="flex items-center gap-3 mb-4 text-red-400">
+              <AlertTriangle className="w-6 h-6" />
+              <h2 className="text-white text-lg font-semibold">Remove shortcut?</h2>
+            </div>
+            
+            <p className="text-gray-300 text-sm mb-6">
+              Are you sure you want to delete <strong>{shortcuts.find(s => s.id === deleteConfirmationId)?.name}</strong>? This action cannot be undone.
+            </p>
+
+            <div className="flex justify-end gap-3">
+              <button 
+                onClick={() => setDeleteConfirmationId(null)}
+                className="px-4 py-2 rounded-md text-sm font-medium text-gray-300 hover:bg-[#2B2A33] transition-colors"
+              >
+                Cancel
+              </button>
+              <button 
+                onClick={executeDelete}
+                className="px-4 py-2 rounded-md text-sm font-medium bg-red-600 text-white hover:bg-red-700 transition-colors"
+              >
+                Delete
+              </button>
+            </div>
           </div>
         </div>
       )}
