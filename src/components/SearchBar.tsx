@@ -81,10 +81,10 @@ export default function SearchBar({ isCollapsed }: SearchBarProps) {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder="   Search with Google"
+          placeholder="Search with Google"
           className="
             w-full
-            pl-12 pr-12
+            pl-16 pr-12
             py-3 sm:py-4 md:py-5
             bg-[#2B2A33]
             border-none
