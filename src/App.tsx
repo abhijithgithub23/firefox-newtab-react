@@ -21,7 +21,7 @@ function App() {
     return saved !== null ? JSON.parse(saved) : true;
   });
 
-  // NEW: Lifted search state
+  // Lifted search state
   const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
@@ -59,7 +59,6 @@ function App() {
       <div className="min-h-screen bg-black/20">
         <div className="w-full px-8 md:px-12 py-8 transition-all duration-700">
           
-          {/* Pass searchQuery and setter to SearchBar */}
           <SearchBar 
             isCollapsed={isCollapsed} 
             searchQuery={searchQuery}
@@ -68,7 +67,7 @@ function App() {
 
           <div className="max-w-6xl mx-auto transition-all duration-700">
             {showShortcuts && <Shortcuts />}
-            {/* Pass searchQuery to NewsFeed for filtering */}
+
             {showNews && <NewsFeed searchQuery={searchQuery} />}
           </div>
         </div>

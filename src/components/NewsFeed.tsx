@@ -8,7 +8,6 @@ interface NewsFeedProps {
 export default function NewsFeed({ searchQuery }: NewsFeedProps) {
   const { articles, loading } = useNews();
 
-  // Filter articles based on the search query
   const filteredArticles = articles.filter(article => 
     article.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
@@ -22,7 +21,7 @@ export default function NewsFeed({ searchQuery }: NewsFeedProps) {
       {loading ? (
         <div className="text-gray-400">Loading stories...</div>
       ) : filteredArticles.length > 0 ? (
-        <div className="grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {filteredArticles.map((article, i) => (
             <StoryCard key={i} article={article} />
           ))}
