@@ -30,7 +30,7 @@ export default function CustomizePanel({
 }: Props) {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  //  DEFINE YOUR DEFAULT BACKGROUND HERE
+  // DEFAULT BACKGROUND HERE
   const defaultBackground: BackgroundSettings = {
     type: "color",
     value: "bg-[#1C1B22]"

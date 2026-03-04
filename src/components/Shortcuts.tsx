@@ -57,22 +57,45 @@ const Shortcuts = () => {
 
   const ensureProtocol = (url: string) => url.startsWith('http') ? url : `https://${url}`;
 
-  // Handle Form Submission (Add or Edit)
+
+
+  
+  
+  // handles input name and url
   const handleSave = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.name || !formData.url) return;
 
-    const finalUrl = ensureProtocol(formData.url);
+    const trimmedName = formData.name.trim();
+    const trimmedUrl = formData.url.trim();
+
+    // Name validation: only alphanumeric
+    const nameRegex = /^[a-zA-Z0-9]+$/;
+    if (!trimmedName || !nameRegex.test(trimmedName)) {
+      alert("Name must contain only alphanumeric characters and no spaces.");
+      return;
+    }
+
+    // URL validation: must contain at least one dot
+    if (!trimmedUrl || !trimmedUrl.includes(".")) {
+      alert("Please enter a valid URL with at least one dot (e.g., example.com).");
+      return;
+    }
+
+    // Ensure protocol
+    const finalUrl = ensureProtocol(trimmedUrl);
+
     const iconUrl = getFaviconUrl(finalUrl);
 
     if (editingId) {
-      setShortcuts(shortcuts.map(sc => 
-        sc.id === editingId ? { ...sc, name: formData.name, url: finalUrl, icon: iconUrl } : sc
+      setShortcuts(shortcuts.map(sc =>
+        sc.id === editingId
+          ? { ...sc, name: trimmedName, url: finalUrl, icon: iconUrl }
+          : sc
       ));
     } else {
       const newShortcut: Shortcut = {
         id: uuidv4(),
-        name: formData.name,
+        name: trimmedName,
         url: finalUrl,
         icon: iconUrl,
       };
@@ -81,6 +104,10 @@ const Shortcuts = () => {
 
     closeModal();
   };
+
+
+
+
 
   const handleDelete = (id: string, e: React.MouseEvent) => {
     e.preventDefault();
