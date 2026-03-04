@@ -37,12 +37,27 @@ export default function CustomizePanel({
   };
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setBgSettings({ type: "image", value: imageUrl });
-    }
+  const file = e.target.files?.[0];
+  if (!file) return;
+
+  if (file.size > 4 * 1024 * 1024) {
+    alert("Image too large. Keep it under 4MB.");
+    return;
+  }
+
+  const reader = new FileReader();
+
+  reader.onloadend = () => {
+    const base64String = reader.result as string;
+
+    setBgSettings({
+      type: "image",
+      value: base64String,
+    });
   };
+
+  reader.readAsDataURL(file);
+};
 
   const handleResetDefault = () => {
     setBgSettings(defaultBackground);
