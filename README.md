@@ -14,7 +14,7 @@ A customizable new firefox tab  built with **React**, **Vite**, and **TypeScript
 
 ## Demo
 
-Live demo link: 
+Live demo link: https://firefox-new-tab.netlify.app/
 
 ## Features
 
