@@ -69,13 +69,13 @@ function App() {
 
           </div>
 
-        </div>
+        </div>  
 
       </div>
 
 
       <CustomizePanel
-        bgSettings={bgSettings}
+        bgSettings={bgSettings}  
         setBgSettings={setBgSettings}
         showShortcuts={showShortcuts}
         setShowShortcuts={setShowShortcuts}

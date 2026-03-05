@@ -57,20 +57,25 @@ const Shortcuts = () => {
     }
   };
 
-  const ensureProtocol = (url: string) => url.startsWith('http') ? url : `https://${url}`;
+  const ensureProtocol = (url: string) =>
+  url.startsWith("http") ? url : `https://${url}`;
+
+  const urlRegex = /^(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)$/i;
 
   const handleSave = (e: React.FormEvent) => {
     e.preventDefault();
+
     const trimmedName = formData.name.trim();
     const trimmedUrl = formData.url.trim();
 
-    const nameRegex = /^[a-zA-Z0-9\s]+$/; // Allowed spaces in name 
+    const nameRegex = /^[a-zA-Z0-9\s]+$/;
+
     if (!trimmedName || !nameRegex.test(trimmedName)) {
       alert("Name must contain only alphanumeric characters.");
       return;
     }
 
-    if (!trimmedUrl || !trimmedUrl.includes(".")) {
+    if (!trimmedUrl || !urlRegex.test(trimmedUrl)) {
       alert("Please enter a valid URL.");
       return;
     }
@@ -79,11 +84,13 @@ const Shortcuts = () => {
     const iconUrl = getFaviconUrl(finalUrl);
 
     if (editingId) {
-      setShortcuts(shortcuts.map(sc =>
-        sc.id === editingId
-          ? { ...sc, name: trimmedName, url: finalUrl, icon: iconUrl }
-          : sc
-      ));
+      setShortcuts(
+        shortcuts.map((sc) =>
+          sc.id === editingId
+            ? { ...sc, name: trimmedName, url: finalUrl, icon: iconUrl }
+            : sc
+        )
+      );
     } else {
       const newShortcut: Shortcut = {
         id: uuidv4(),
@@ -93,6 +100,7 @@ const Shortcuts = () => {
       };
       setShortcuts([...shortcuts, newShortcut]);
     }
+
     closeModal();
   };
 
