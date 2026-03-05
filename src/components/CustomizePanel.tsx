@@ -11,6 +11,8 @@ import { Settings, Plus } from "lucide-react";
 import type { BackgroundSettings } from "../types";
 import { useRef } from "react";
 
+import React from "react";
+
 interface Props {
   bgSettings: BackgroundSettings;
   setBgSettings: (settings: BackgroundSettings) => void;
@@ -20,7 +22,7 @@ interface Props {
   setShowNews: (val: boolean) => void;
 }
 
-export default function CustomizePanel({
+function CustomizePanel({
   bgSettings, // Now active
   setBgSettings,
   showShortcuts,
@@ -181,3 +183,5 @@ export default function CustomizePanel({
     </Sheet>
   );
 }
+
+export default React.memo(CustomizePanel);

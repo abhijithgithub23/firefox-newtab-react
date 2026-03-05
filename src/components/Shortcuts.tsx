@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { MoreHorizontal, Plus, Edit2, Trash2, X, AlertTriangle } from 'lucide-react';
 import { v4 as uuidv4 } from 'uuid';
+import React from "react";
+
 
 // Define the shape of our Shortcut object
 interface Shortcut {
@@ -11,6 +13,10 @@ interface Shortcut {
 }
 
 const Shortcuts = () => {
+
+  // console.log("Shortcut rerendered");
+
+
   // Local Storage if available
   const [shortcuts, setShortcuts] = useState<Shortcut[]>(() => {
     const saved = localStorage.getItem('firefox-shortcuts');
@@ -281,5 +287,4 @@ const Shortcuts = () => {
     </div>
   );
 }
-
-export default Shortcuts;
+export default React.memo(Shortcuts);
