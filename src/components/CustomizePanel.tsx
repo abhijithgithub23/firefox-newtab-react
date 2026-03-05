@@ -29,7 +29,11 @@ function CustomizePanel({
   setShowShortcuts,
   showNews,
   setShowNews
-}: Props) {
+  }: Props) {
+
+    //  console.log("Rendering CustomizePanel");
+
+
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const defaultBackground: BackgroundSettings = {
