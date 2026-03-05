@@ -16,7 +16,6 @@ const Shortcuts = () => {
 
   // console.log("Shortcut rerendered");
 
-
   // Local Storage if available
   const [shortcuts, setShortcuts] = useState<Shortcut[]>(() => {
     const saved = localStorage.getItem('firefox-shortcuts');
@@ -65,7 +64,7 @@ const Shortcuts = () => {
     const trimmedName = formData.name.trim();
     const trimmedUrl = formData.url.trim();
 
-    const nameRegex = /^[a-zA-Z0-9\s]+$/; // Allowed spaces in name for better UX
+    const nameRegex = /^[a-zA-Z0-9\s]+$/; // Allowed spaces in name 
     if (!trimmedName || !nameRegex.test(trimmedName)) {
       alert("Name must contain only alphanumeric characters.");
       return;
@@ -97,7 +96,7 @@ const Shortcuts = () => {
     closeModal();
   };
 
-  // 1. Open confirmation modal
+  //  Delete confirm modal
   const confirmDelete = (id: string, e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -105,7 +104,7 @@ const Shortcuts = () => {
     setActiveMenuId(null);
   };
 
-  // 2. Actually delete the shortcut
+  //  delete shortcut
   const executeDelete = () => {
     if (deleteConfirmationId) {
       setShortcuts(shortcuts.filter(sc => sc.id !== deleteConfirmationId));

@@ -31,7 +31,7 @@ function CustomizePanel({
   setShowNews
   }: Props) {
 
-    //  console.log("Rendering CustomizePanel");
+  //  console.log("Rendering CustomizePanel");
 
 
   const fileInputRef = useRef<HTMLInputElement>(null);
