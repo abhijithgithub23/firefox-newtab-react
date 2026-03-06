@@ -60,8 +60,7 @@ const Shortcuts = () => {
   const ensureProtocol = (url: string) =>
   url.startsWith("http") ? url : `https://${url}`;
 
-  const urlRegex = /^(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)$/i;
-
+  const urlRegex = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/i;
   const handleSave = (e: React.FormEvent) => {
     e.preventDefault();
 
