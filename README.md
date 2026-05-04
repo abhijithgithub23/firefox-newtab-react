@@ -59,19 +59,7 @@ cd firefox-new-tab
 4. Open http://localhost:5173
 
 
-## Folder Structure
 
-project-root/
-│
-├─ public/           # Static files
-├─ src/
-│   ├─ components/   # Reusable components
-│   ├─ hooks/        # News Api
-│   ├─ lib/          # Shadcn utility
-│   ├─ App.tsx       # Main app component
-│   └─ main.tsx      # Entry point
-├─ package.json
-└─ README.md
 
 
 
